@@ -62,16 +62,16 @@ pages{
   let courses = [];
   let info = [];
 
-  result.data.projects.nodes.forEach(node => {
-    createPage({
-      path: node.slug,
-      component: projectTemplate,
-      context: {
-        slug: node.slug,
-        images: `/${node.images}/`,
-      },
-    })
-  })
+  // result.data.projects.nodes.forEach(node => {
+  //   createPage({
+  //     path: node.slug,
+  //     component: projectTemplate,
+  //     context: {
+  //       slug: node.slug,
+  //       images: `/${node.images}/`,
+  //     },
+  //   })
+  // })
 
   blogPosts.forEach(({ node }, i) => {
     if (node.categories.edges[0].node.name == "courses") {
