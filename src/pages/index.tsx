@@ -7,6 +7,7 @@ import Layout from '../components/layout'
 import GridItem from '../components/grid-item'
 import SEO from '../components/SEO'
 import { ChildImageSharp } from '../types'
+import InfoPages from '../components/infoPages'
 
 type PageProps = {
   data: {
@@ -21,6 +22,18 @@ type PageProps = {
         slug: string
         cover: ChildImageSharp
       }[]
+    }
+    posts: {
+      edges: {
+        node: {
+          id: string
+          title: string
+          slug: string
+          featuredImage: {
+            sourceUrl: string
+          }
+        }
+      }
     }
     aboutUs: ChildImageSharp
     instagram: ChildImageSharp
@@ -106,7 +119,8 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
   return (
     <Layout>
       <SEO />
-      <Area style={pageAnimation}>
+      <InfoPages />
+      {/**<Area style={pageAnimation}>
         <FirstProject to={firstProject.slug} aria-label={`View project "${firstProject.title}"`}>
           <Img fluid={firstProject.cover.childImageSharp.fluid} />
           <span>{firstProject.title}</span>
@@ -116,9 +130,9 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
           <span>About</span>
         </AboutUs>
         <ThreeProjects>
-          {threeProjects.nodes.map((project) => (
+          {posts.edges.node.map((project) => (
             <GridItem to={project.slug} key={project.slug} aria-label={`View project "${project.title}"`}>
-              <Img fluid={project.cover.childImageSharp.fluid} />
+              <Img fluid={firstProject.cover.childImageSharp.fluid} />
               <span>{project.title}</span>
             </GridItem>
           ))}
@@ -127,7 +141,7 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
           <Img fluid={instagram.childImageSharp.fluid} />
           <span>Instagram</span>
         </Instagram>
-      </Area>
+      </Area> */}
     </Layout>
   )
 }
@@ -171,6 +185,38 @@ export const query = graphql`
       childImageSharp {
         fluid(quality: 95, maxWidth: 1920) {
           ...GatsbyImageSharpFluid_withWebp
+        }
+      }
+    }
+    wpgraphql{
+      posts(first: 100){
+        edges{
+          node{
+            id
+            title
+            slug
+            featuredImage{
+              sourceUrl
+            }
+          }
+        }
+      }
+    }
+
+    allFile {
+      edges {
+        node {
+          name
+          parent{
+            id
+          }
+          childImageSharp {
+            fluid (maxWidth: 500){
+              srcSet
+              ...GatsbyImageSharpFluid
+
+            }
+          }
         }
       }
     }

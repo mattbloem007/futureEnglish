@@ -21,11 +21,11 @@ const GlobalStyles = createGlobalStyle`
     box-sizing: border-box;
     border: 0;
     margin: 0;
-    
+
     h1, h2, h3, h4, h5, h6 {
       font-weight: ${theme.fontWeights.bold};
     }
-    
+
     h1 {
       font-size: ${theme.fontSizes[5]};
     }
@@ -44,10 +44,10 @@ const GlobalStyles = createGlobalStyle`
     h6 {
       font-size: ${theme.fontSizes[0]};
     }
-    
+
     @media (max-width: 600px) {
       font-size: 16px;
-      
+
       h1 {
         font-size: ${theme.fontSizes[4]};
       }
@@ -86,7 +86,7 @@ const GlobalStyles = createGlobalStyle`
       color: ${theme.colors.primary};
     }
   }
-  
+
   ${reset}
 `
 
@@ -251,10 +251,10 @@ const Layout = ({ children, color }: LayoutProps) => {
           </SideBarInner>
           <Main>{children}</Main>
           <Footer color={color}>
-            <Box p={[6, 6, 8]} fontSize={0}>
+            {/**<Box p={[6, 6, 8]} fontSize={0}>
               Starter by <a href="https://www.lekoarts.de/en">LekoArts</a>.<br />
               <a href="https://github.com/LekoArts/gatsby-starter-portfolio-jodie">Source</a>.
-            </Box>
+            </Box>*/}
           </Footer>
         </Wrapper>
       </>

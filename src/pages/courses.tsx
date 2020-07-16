@@ -7,6 +7,8 @@ import Layout from '../components/layout'
 import GridItem from '../components/grid-item'
 import SEO from '../components/SEO'
 import { ChildImageSharp } from '../types'
+import CoursePage from '../components/coursePage'
+
 
 type PageProps = {
   data: {
@@ -31,7 +33,7 @@ const Area = styled(animated.div)`
   }
 `
 
-const Projects: React.FunctionComponent<PageProps> = ({ data: { projects } }) => {
+const Projects = () => {
   const pageAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0 },
@@ -39,16 +41,17 @@ const Projects: React.FunctionComponent<PageProps> = ({ data: { projects } }) =>
   })
 
   return (
-    <Layout color="#000">
-      <SEO title="Projects | Jodie" />
-      <Area style={pageAnimation}>
+    <Layout color="#ff0000">
+      <SEO title="Courses | Future English Academy" />
+      <CoursePage />
+      {/**<Area style={pageAnimation}>
         {projects.nodes.map((project) => (
           <GridItem key={project.slug} to={project.slug} aria-label={`View project "${project.title}"`}>
             <Img fluid={project.cover.childImageSharp.fluid} />
             <span>{project.title}</span>
           </GridItem>
         ))}
-      </Area>
+      </Area>*/}
     </Layout>
   )
 }

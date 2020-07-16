@@ -13,13 +13,10 @@ const About = () => {
 
   return (
     <Layout>
-      <SEO title="About | Jodie" desc="Hi. I'm LekoArts! You can visit my website or my other Gatsby projects." />
+      <SEO title="About | FEA" desc="This is Future English Academy" />
       <AnimatedBox style={pageAnimation} py={[6, 6, 6, 8]} px={[6, 6, 8, 6, 8, 13]}>
-        <h1>Hi. I'm LekoArts!</h1>
-        <p>You can visit my website or my other Gatsby projects:</p>
-        <p>
-          <a href="https://www.lekoarts.de">Website</a> - <a href="https://themes.lekoarts.de">More projects</a>
-        </p>
+        <h1>Welcome to Future English Academy</h1>
+        <p>This is what we are about</p>
       </AnimatedBox>
     </Layout>
   )

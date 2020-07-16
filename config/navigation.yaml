@@ -1,6 +1,4 @@
-- name: "Projects"
-  link: "/projects"
-- name: "Instagram"
-  link: "/instagram"
+- name: "Our Classes"
+  link: "/courses"
 - name: "About"
   link: "/about"

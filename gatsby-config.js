@@ -64,6 +64,43 @@ module.exports = {
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
     'gatsby-plugin-sitemap',
+    `gatsby-plugin-react-helmet`,
+    {
+        resolve: `gatsby-transformer-remark`,
+        options: {
+            plugins: [
+                "gatsby-remark-copy-linked-files",
+                {
+                    resolve: `gatsby-remark-images`,
+                    options: {
+                        maxWidth: 1280
+                    }
+                }
+            ]
+        }
+    },
+    {
+       resolve: `gatsby-source-graphql`,
+
+       options: {
+         // This type will contain remote schema Query type
+         typeName: `WPGraphQL`,
+         // This is field under which it's accessible
+         fieldName: `wpgraphql`,
+         // Url to query from
+         url: `http://41.185.8.137/~xic02/wordpress/graphql`,
+      //  url: `http://alchemy-of-remembrance.local/graphql`
+       },
+     },
+    //  {
+    //   resolve: "gatsby-wpgraphql-inline-images",
+    //   options: {
+    //     wordPressUrl: 'http://41.185.8.137/~xic02/future%20english/',
+    //     uploadsUrl: 'http://41.185.8.137/~xic02/future%20english/wp-content/uploads/',
+    //     processPostTypes: ["Post"],
+    //     graphqlTypeName: `WPGraphQL`,
+    //   },
+    // },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
