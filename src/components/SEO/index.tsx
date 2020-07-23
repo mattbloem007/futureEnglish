@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet'
 import { useStaticQuery, graphql } from 'gatsby'
 import Facebook from './facebook'
 import Twitter from './twitter'
+import { useTranslation } from 'react-i18next';
+import { usePageContext } from '../../../PageContext';
 
 type Props = {} & typeof defaultProps
 
@@ -20,6 +22,8 @@ const defaultProps = {
 
 const SEO = ({ title, desc, banner, pathname, node, individual }: Props) => {
   const { site } = useStaticQuery(query)
+  const { t } = useTranslation();
+
 
   const {
     buildTime,
@@ -36,6 +40,8 @@ const SEO = ({ title, desc, banner, pathname, node, individual }: Props) => {
       facebook,
     },
   } = site
+
+  const { lang, originalPath } = usePageContext();
 
   const seo = {
     title: title || defaultTitle,
@@ -178,13 +184,33 @@ const SEO = ({ title, desc, banner, pathname, node, individual }: Props) => {
     itemListElement,
   }
 
+  const host = site.siteMetadata.siteUrl;
+
+
   return (
     <>
-      <Helmet title={seo.title}>
-        <html lang={siteLanguage} />
+      <Helmet htmlAttributes={{lang,}} titleTemplate={`%s | ${t('seo.title')}`}
+      link={[
+        {
+          rel: 'canonical',
+          href: `${host}/${lang}${originalPath}`,
+        },
+        {
+          rel: 'alternate',
+          hrefLang: 'x-default',
+          href: `${host}${originalPath}`,
+        },
+        ...site.siteMetadata.supportedLanguages.map(supportedLang => ({
+          rel: 'alternate',
+          hrefLang: supportedLang,
+          href: `${host}/${supportedLang}${originalPath}`,
+        })),
+      ]}
+      >{/**title={seo.title}>
+        <html lang={siteLanguage} />*/}
         <meta name="description" content={seo.description} />
         <meta name="image" content={seo.image} />
-        <meta name="gatsby-starter" content="Gatsby Starter Portfolio Jodie" />
+        <meta name="Future Leadership English" content="Future Leadership English Academy" />
         {/* Insert schema.org data conditionally (webpage/article) + everytime (breadcrumbs) */}
         {!individual && <script type="application/ld+json">{JSON.stringify(schemaOrgWebPage)}</script>}
         {individual && <script type="application/ld+json">{JSON.stringify(schemaArticle)}</script>}
@@ -218,6 +244,7 @@ const query = graphql`
         defaultDescription: description
         defaultBanner: logo
         headline
+        supportedLanguages
         siteLanguage
         ogLanguage
         author

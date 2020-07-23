@@ -17,6 +17,8 @@ module.exports = {
     logo: config.siteLogo,
     headline: config.siteHeadline,
     siteLanguage: config.siteLanguage,
+    supportedLanguages: ["us", "cn", "eu", "es", "mx", "gh", "vn", "kr", "jp"],
+    defaultLanguage: "us",
     ogLanguage: config.ogLanguage,
     author: config.author,
     twitter: config.userTwitter,

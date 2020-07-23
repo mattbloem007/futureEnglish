@@ -1,12 +1,14 @@
 import React from 'react'
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components'
-import { graphql, Link, useStaticQuery } from 'gatsby'
+import { graphql, useStaticQuery } from 'gatsby'
+import Link from '../../Link'
 import { readableColor } from 'polished'
 import 'typeface-work-sans'
 import { Box, Flex } from '../elements'
 import theme from '../../config/theme'
 import reset from '../styles/reset'
 import Logo from './logo'
+import LanguagePicker from './language-picker'
 
 const GlobalStyles = createGlobalStyle`
   *::before,
@@ -241,10 +243,11 @@ const Layout = ({ children, color }: LayoutProps) => {
                 flexDirection={['row', 'row', 'row', 'column']}
                 alignItems="flex-start"
               >
+              <LanguagePicker />
                 {data.navigation.nodes.map((item) => (
-                  <PartialNavLink to={item.link} key={item.name}>
+                  <Link to={item.link} key={item.name}>
                     {item.name}
-                  </PartialNavLink>
+                  </Link>
                 ))}
               </Nav>
             </Flex>

@@ -3,6 +3,8 @@ import { Link } from "gatsby";
 import Img from "gatsby-image";
 import styled from 'styled-components'
 import GridItem from './grid-item'
+import { usePageContext } from '../../PageContext';
+
 
 import { animated, useSpring, config } from 'react-spring'
 
@@ -70,7 +72,7 @@ class PageItem extends React.Component {
       }
       console.log(isImage)
         return (
-          <GridItem to={this.props.data.node.slug} aria-label={`View project "${this.props.data.node.title}"`}>
+          <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
             {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
             <span>{this.props.data.node.title}</span>
           </GridItem>
@@ -80,7 +82,8 @@ class PageItem extends React.Component {
 }
 
 export default function(props) {
-    console.log(props.data)
+  const { lang } = usePageContext();
+    console.log(lang)
     let items = [];
     let fileIndex;
     if (props.data.wpgraphql.posts.edges != undefined) {
@@ -89,13 +92,13 @@ export default function(props) {
           if (props.remove && e.node.id === props.remove) return;
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
-                console.log(node.parent.id)
-                if (node.parent.id == "SitePage /" + e.node.slug) {
+                console.log(e.node.slug)
+                if (node.parent.id == `SitePage /${lang}/` + e.node.slug) {
                   return node
                 }
               }
             })
-            console.log(fileIndex)
+
             if (fileIndex) {
               items.push(<PageItem key={e.node.id} data={e} file={fileIndex}/>);
             }

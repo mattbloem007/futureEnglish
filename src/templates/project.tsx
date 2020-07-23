@@ -4,7 +4,7 @@ import Img from 'gatsby-image'
 import { transparentize, readableColor } from 'polished'
 import styled from 'styled-components'
 import { config, useSpring, animated } from 'react-spring'
-import Layout from '../components/layout'
+import Layout from '../components/layout2'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
 
@@ -85,6 +85,7 @@ const PButton = styled(Button)<{ color: string }>`
 // }
 
 const Project = ({ data }) => {
+  console.log("DATA: ", data)
   const categoryAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0, transform: 'translate3d(0, -30px, 0)' },

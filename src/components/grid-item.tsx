@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Link } from 'gatsby'
+import Link from '../../Link'
 
 const GridItem = styled(Link)`
   position: relative;

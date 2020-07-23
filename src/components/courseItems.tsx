@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import Img from "gatsby-image";
 import styled from 'styled-components'
 import GridItem from './grid-item'
+import { usePageContext } from '../../PageContext';
 
 import { animated, useSpring, config } from 'react-spring'
 
@@ -64,7 +65,7 @@ class CourseItem extends React.Component {
       }
       console.log(this.props.data.node.title)
         return (
-          <GridItem to={this.props.data.node.slug} aria-label={`View project "${this.props.data.node.title}"`}>
+          <GridItem to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
             {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
             <span>{this.props.data.node.title}</span>
           </GridItem>
@@ -74,6 +75,7 @@ class CourseItem extends React.Component {
 }
 
 export default function(props) {
+  const { lang } = usePageContext();
     console.log(props.data)
     let items = [];
     let fileIndex;
@@ -84,7 +86,7 @@ export default function(props) {
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
                 console.log(node.parent.id)
-                if (node.parent.id == "SitePage /courses/" + e.node.slug) {
+                if (node.parent.id == `SitePage /${lang}/courses/` + e.node.slug) {
                   return node
                 }
               }
