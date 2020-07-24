@@ -155,7 +155,7 @@ pages{
             }
           })
       }
-      else {
+      else if (lang == "us"){
         langu = lang
         createPage({
             path: `/${langu}/courses/${node.slug}`,
@@ -194,7 +194,7 @@ pages{
               }
             })
         }
-        else {
+        else if (lang == "us"){
           langu = lang
           createPage({
               path: `/${langu}/${node.slug}`,
