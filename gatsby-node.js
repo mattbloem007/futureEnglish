@@ -157,18 +157,21 @@ pages{
   // })
 
   blogPosts.forEach(({ node }, i) => {
-    if (node.categories.edges[0].node.name == "courses") {
-      courses.push(node)
-    }
-    else if (node.categories.edges[0].node.name == "register") {
-      register.push(node)
-    }
-    else if (node.categories.edges[0].node.name == "blog") {
-      blog.push(node)
-    }
-    else {
-      info.push(node)
-    }
+    //if (node.categories.edges.length == 1) {
+      if (node.categories.edges[0].node.name == "courses") {
+        courses.push(node)
+      }
+      else if (node.categories.edges[0].node.name == "register") {
+        register.push(node)
+      }
+      else if (node.categories.edges[0].node.name == "blog") {
+        blog.push(node)
+      }
+      else {
+        info.push(node)
+      }
+  //  }
+
   });
   //console.log(courses, " ", info)
 
@@ -352,7 +355,7 @@ exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNode
     let fileNode
 
     if (node.internal.type === `SitePage`) {
-
+console.log("NODE ", node.id)
      if (node.context != undefined) {
 
        if (node.context.featuredImage) {
@@ -369,7 +372,7 @@ exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNode
          } catch (e) {
            console.log(e)
          }
-         console.log("NODE ", node.id)
+
        }
       }
     }
