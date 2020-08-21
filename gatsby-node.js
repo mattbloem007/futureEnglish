@@ -100,7 +100,7 @@ exports.createPages = async ({ graphql, actions }) => {
         }
 
         wpgraphql{
-posts(first: 100){
+posts(first: 1000){
   edges{
     node{
       id
@@ -170,6 +170,7 @@ pages{
       info.push(node)
     }
   });
+  //console.log(courses, " ", info)
 
   config.siteMetadata.supportedLanguages.map(async lang => {
     let langu = lang
@@ -212,6 +213,7 @@ pages{
       });
 
       blog.forEach((node) => {
+      //  console.log("Blog: ", node.slug)
         if (node.tags.edges.length > 0) {
           if(node.tags.edges[0].node.name != lang) {
             langu = node.tags.edges[0].node.name
@@ -250,6 +252,7 @@ pages{
         });
 
       register.forEach((node) => {
+      //  console.log("Register: ", node.slug)
         if (node.tags.edges.length > 0) {
           if(node.tags.edges[0].node.name != lang) {
             langu = node.tags.edges[0].node.name
@@ -288,7 +291,7 @@ pages{
         });
 
       info.forEach((node) => {
-        //console.log(node)
+      //  console.log("INFO: ", node.slug)
         let langu = lang
         if (node.tags.edges.length > 0) {
           if(node.tags.edges[0].node.name != lang) {
@@ -310,6 +313,7 @@ pages{
         }
         else if (lang == "us"){
           langu = lang
+          console.log(langu, " ", node.slug, " ", node.id)
           createPage({
               path: `/${langu}/${node.slug}`,
               component: projectTemplate,
@@ -346,7 +350,7 @@ pages{
 exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNodeId, _auth, }) => {
     const { createNodeField, createNode } = actions;
     let fileNode
-    
+
     if (node.internal.type === `SitePage`) {
 
      if (node.context != undefined) {

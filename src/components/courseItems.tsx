@@ -85,7 +85,7 @@ class CourseItem extends React.Component {
       switch (this.props.title) {
         case "0":
         return (
-          <FirstProject to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+          <FirstProject to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
             {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
             <span>{this.props.data.node.title}</span>
           </FirstProject>
@@ -128,7 +128,7 @@ class CourseItem extends React.Component {
           }
           else {
             return (
-              <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+              <GridItem to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
                 <span>{this.props.data.node.title}</span>
               </GridItem>
