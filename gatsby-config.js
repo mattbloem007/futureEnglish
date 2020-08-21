@@ -1,5 +1,6 @@
 require('dotenv').config({
   path: `.env`,
+//  path: `.env.${process.env.NODE_ENV}`,
 })
 
 const config = require('./config')
@@ -36,6 +37,14 @@ module.exports = {
         path: `${__dirname}/content/projects`,
       },
     },
+    {
+     resolve: `gatsby-source-stripe`,
+     options: {
+       objects: ["Product", "Price", "Sku"],
+       secretKey: "sk_test_51HEEgYB5GFb0biC7j4eJzYohFGy40EkNnW0mwOtc92JpRR0RtSZOxafu1awTUQcQMbRcrx4BGDY2BTjR4YhpVET000frsUnQ6n",
+       downloadFiles: false,
+     },
+   },
     {
       resolve: 'gatsby-source-filesystem',
       options: {

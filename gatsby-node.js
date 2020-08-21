@@ -11,9 +11,38 @@ const wrapper = promise =>
     return result
   })
 
+  exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+  if (stage === "build-html") {
+    /*
+     * During the build step, `auth0-js` will break because it relies on
+     * browser-specific APIs. Fortunately, we don’t need it during the build.
+     * Using Webpack’s null loader, we’re able to effectively ignore `auth0-js`
+     * during the build. (See `src/utils/auth.js` to see how we prevent this
+     * from breaking the app.)
+     */
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /auth0-js/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    })
+  }
+}
+
   exports.onCreatePage = async ({ page, actions: { createPage, deletePage, createRedirect } }) => {
     const isEnvDevelopment = process.env.NODE_ENV === 'development';
     const originalPath = page.path;
+
+    if (page.path.match(/^\/account/)) {
+        page.matchPath = "/account/*"
+
+        // Update the page.
+        createPage(page)
+    }
     // Delete the original page (since we are gonna create localized versions of it) and add a
     // redirect header
     await deletePage(page);
@@ -113,6 +142,8 @@ pages{
   const allPages = result.data.wpgraphql.pages.edges;
   let courses = [];
   let info = [];
+  let register = [];
+  let blog = [];
 
   // result.data.projects.nodes.forEach(node => {
   //   createPage({
@@ -128,6 +159,12 @@ pages{
   blogPosts.forEach(({ node }, i) => {
     if (node.categories.edges[0].node.name == "courses") {
       courses.push(node)
+    }
+    else if (node.categories.edges[0].node.name == "register") {
+      register.push(node)
+    }
+    else if (node.categories.edges[0].node.name == "blog") {
+      blog.push(node)
     }
     else {
       info.push(node)
@@ -174,7 +211,84 @@ pages{
 
       });
 
+      blog.forEach((node) => {
+        if (node.tags.edges.length > 0) {
+          if(node.tags.edges[0].node.name != lang) {
+            langu = node.tags.edges[0].node.name
+          }
+          createPage({
+              path: `/${langu}/blog/${node.slug}`,
+              component: projectTemplate,
+              context: {
+                  id: node.id,
+                  slug: node.slug,
+                  images: node.featuredImage,
+                  id2:  {"eq": `SitePage /${langu}/blog/${node.slug}`},
+                  featuredImage: node.featuredImage,
+                  originalPath: `/blog/${node.slug}`,
+                  lang: langu
+              }
+            })
+        }
+        else if (lang == "us"){
+          langu = lang
+          createPage({
+              path: `/${langu}/blog/${node.slug}`,
+              component: projectTemplate,
+              context: {
+                  id: node.id,
+                  slug: node.slug,
+                  images: node.featuredImage,
+                  id2:  {"eq": `SitePage /${langu}/blog/${node.slug}`},
+                  featuredImage: node.featuredImage,
+                  originalPath: `/blog/${node.slug}`,
+                  lang: langu
+              }
+            })
+        }
+
+        });
+
+      register.forEach((node) => {
+        if (node.tags.edges.length > 0) {
+          if(node.tags.edges[0].node.name != lang) {
+            langu = node.tags.edges[0].node.name
+          }
+          createPage({
+              path: `/${langu}/register/${node.slug}`,
+              component: projectTemplate,
+              context: {
+                  id: node.id,
+                  slug: node.slug,
+                  images: node.featuredImage,
+                  id2:  {"eq": `SitePage /${langu}/register/${node.slug}`},
+                  featuredImage: node.featuredImage,
+                  originalPath: `/register/${node.slug}`,
+                  lang: langu
+              }
+            })
+        }
+        else if (lang == "us"){
+          langu = lang
+          createPage({
+              path: `/${langu}/register/${node.slug}`,
+              component: projectTemplate,
+              context: {
+                  id: node.id,
+                  slug: node.slug,
+                  images: node.featuredImage,
+                  id2:  {"eq": `SitePage /${langu}/register/${node.slug}`},
+                  featuredImage: node.featuredImage,
+                  originalPath: `/register/${node.slug}`,
+                  lang: langu
+              }
+            })
+        }
+
+        });
+
       info.forEach((node) => {
+        //console.log(node)
         let langu = lang
         if (node.tags.edges.length > 0) {
           if(node.tags.edges[0].node.name != lang) {
@@ -232,12 +346,12 @@ pages{
 exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNodeId, _auth, }) => {
     const { createNodeField, createNode } = actions;
     let fileNode
-
+    
     if (node.internal.type === `SitePage`) {
+
      if (node.context != undefined) {
 
        if (node.context.featuredImage) {
-
          try {
            fileNode = await createRemoteFileNode({
              url: node.context.featuredImage.sourceUrl,

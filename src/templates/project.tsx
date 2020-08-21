@@ -124,12 +124,12 @@ const Project = ({ data }) => {
             {isImage ? <Img alt={data.file.name} key={data.file.childImageSharp.fluid.srcSet} fluid={data.file.childImageSharp.fluid} /> : null}
         </PBox>
       </Content>
-      <PBox style={{ textAlign: 'center' }} py={10} px={[6, 6, 8, 10]}>
+      {/**<PBox style={{ textAlign: 'center' }} py={10} px={[6, 6, 8, 10]}>
         <h2>Want to start your own project?</h2>
         <PButton color="#90BDDF" py={4} px={8}>
           Contact Us
         </PButton>
-      </PBox>
+      </PBox>*/}
     </Layout>
   )
 }

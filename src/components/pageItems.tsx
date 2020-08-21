@@ -4,7 +4,7 @@ import Img from "gatsby-image";
 import styled from 'styled-components'
 import GridItem from './grid-item'
 import { usePageContext } from '../../PageContext';
-
+import _ from 'lodash'
 
 import { animated, useSpring, config } from 'react-spring'
 
@@ -16,7 +16,7 @@ const Area = styled(animated.div)`
   grid-template-rows: 35vw 40vw 25vw;
   grid-template-areas:
     'first-project about-us about-us'
-    'three-projects three-projects three-projects'
+    'first-project three-projects three-projects'
     'instagram instagram instagram';
 
   @media (max-width: ${(props) => props.theme.breakpoints[3]}) {
@@ -56,11 +56,23 @@ const Area = styled(animated.div)`
   }
 `
 
-
-
 const FirstProject = styled(GridItem)`
   grid-area: first-project;
 `
+const ThreeProjects = styled.div`
+  grid-area: three-projects;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  @media (max-width: ${(props) => props.theme.breakpoints[1]}) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+`
+const AboutUs = styled(GridItem)`
+  grid-area: about-us;
+`
+const Instagram = styled(GridItem)`
+  grid-area: instagram;`
 
 class PageItem extends React.Component {
 
@@ -70,14 +82,83 @@ class PageItem extends React.Component {
       if (this.props.file.node.childImageSharp) {
         isImage = true;
       }
-      console.log(isImage)
+      console.log(this.props.data, ' ', this.props.title)
+      switch (this.props.title) {
+        case "0":
         return (
-          <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+          <FirstProject to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
             {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
             <span>{this.props.data.node.title}</span>
-          </GridItem>
+          </FirstProject>
 
         );
+        break;
+        {/**case "1":
+          return (
+            <ThreeProjects to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+              {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+              <span>{this.props.data.node.title}</span>
+            </ThreeProjects>
+
+          );
+        break; */}
+
+        default:
+        if (this.props.data.node.categories) {
+          console.log(this.props.data.node.categories.nodes, _.some(this.props.data.node.categories.nodes, {"name": "photos"}))
+          if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic1</p>\n") {
+            return (
+              <AboutUs to="#">
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+              </AboutUs>
+            );
+          }
+          else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic2</p>\n") {
+            return (
+              <Instagram to="#">
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+              </Instagram>
+            );
+          }
+          else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"})) {
+            return (
+              <GridItem to="#">
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+              </GridItem>
+            )
+          }
+          else {
+            return (
+              <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+                <span>{this.props.data.node.title}</span>
+              </GridItem>
+            )
+          }
+        }
+
+
+        break;
+      }
+
+
+{  /**      else if (this.props.data.node.excerpt == "<p>b</p>\n") {
+          return (
+            <Instagram>
+              {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+              <span>{this.props.data.node.title}</span>
+            </Instagram>
+          );
+        }
+        else {
+          return (
+          <AboutUs>
+            {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+            <span>{this.props.data.node.title}</span>
+          </AboutUs>
+        )
+      }*/}
+
     }
 }
 
@@ -92,18 +173,22 @@ export default function(props) {
           if (props.remove && e.node.id === props.remove) return;
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
-                console.log(e.node.slug)
+                console.log(node.parent.id, " ", e.node.slug)
                 if (node.parent.id == `SitePage /${lang}/` + e.node.slug) {
+                  return node
+                }
+                else if (node.parent.id == `SitePlugin /${lang}/` + e.node.slug) {
                   return node
                 }
               }
             })
 
             if (fileIndex) {
-              items.push(<PageItem key={e.node.id} data={e} file={fileIndex}/>);
+              items.push(<PageItem key={e.node.id} data={e} file={fileIndex} title={i}/>);
             }
 
       });
+
     }
     return <Area>{items}</Area>;
 }

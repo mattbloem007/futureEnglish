@@ -60,7 +60,7 @@ export default function() {
 
 
             wpgraphql {
-              posts (where: {categoryName: "courses"}){
+              posts(where: {categoryName: "courses"}, first: 200){
                 edges{
                   node{
                     excerpt
@@ -71,7 +71,18 @@ export default function() {
                       sourceUrl(size: LARGE)
                       srcSet(size: MEDIUM_LARGE)
                     }
-
+                    tags {
+                      edges {
+                        node {
+                          name
+                        }
+                      }
+                    }
+                    categories {
+                      nodes {
+                        name
+                      }
+                    }
                   }
                 }
               }
@@ -91,6 +102,22 @@ export default function() {
 
                     }
                   }
+                }
+              }
+            }
+
+            instagram: file(sourceInstanceName: { eq: "images" }, name: { eq: "boston" }) {
+              childImageSharp {
+                fluid(quality: 95, maxWidth: 1920) {
+                  ...GatsbyImageSharpFluid_withWebp
+                }
+              }
+            }
+
+            aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "students3" }) {
+              childImageSharp {
+                fluid(quality: 95, maxWidth: 1200) {
+                  ...GatsbyImageSharpFluid_withWebp
                 }
               }
             }
