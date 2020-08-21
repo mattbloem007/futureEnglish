@@ -4,6 +4,7 @@ import Img from "gatsby-image";
 import styled from 'styled-components'
 import GridItem from './grid-item'
 import { usePageContext } from '../../PageContext';
+import _ from 'lodash'
 
 import { animated, useSpring, config } from 'react-spring'
 
