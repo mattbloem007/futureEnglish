@@ -412,7 +412,7 @@ const auth = isBrowser
   ? new auth0.WebAuth({
       domain: "future-eng.us.auth0.com", //process.env.AUTH0_DOMAIN,
       clientID: "Qy7y5utJXi9uKlwT962PTeDXFTmXCJvu", //process.env.AUTH0_CLIENTID,
-      redirectUri: "http://localhost:8000/us/callback", //process.env.AUTH0_CALLBACK,
+      redirectUri: "https://englishacademy.netlify.app/us/callback", //process.env.AUTH0_CALLBACK,
       responseType: "token id_token",
       scope: "openid profile email user_metadata",
     })

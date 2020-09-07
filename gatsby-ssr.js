@@ -1,5 +1,5 @@
 import React from 'react';
-import PageContextProvider from './PageContext';
+import {PageContextProvider} from './PageContext';
 import i18n from './i18next';
 import { I18nextProvider } from 'react-i18next';
 import { silentAuth } from "./src/utils/auth"
