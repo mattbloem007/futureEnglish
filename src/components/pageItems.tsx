@@ -16,7 +16,7 @@ const Area = styled(animated.div)`
   grid-template-rows: 35vw 40vw 25vw;
   grid-template-areas:
     'first-project about-us about-us'
-    'first-project three-projects three-projects'
+    'first-project three-projects grid-item'
     'instagram instagram instagram';
 
   @media (max-width: ${(props) => props.theme.breakpoints[3]}) {
@@ -106,7 +106,15 @@ class PageItem extends React.Component {
         default:
         if (this.props.data.node.categories) {
           console.log(this.props.data.node.categories.nodes, _.some(this.props.data.node.categories.nodes, {"name": "photos"}))
-          if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic1</p>\n") {
+          if (!(_.some(this.props.data.node.categories.nodes, {"name": "photos"}))) {
+            return (
+              <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+                <span>{this.props.data.node.title}</span>
+              </GridItem>
+            )
+          }
+          else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic1</p>\n") {
             return (
               <AboutUs to="#">
                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
@@ -127,14 +135,7 @@ class PageItem extends React.Component {
               </GridItem>
             )
           }
-          else {
-            return (
-              <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
-                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
-                <span>{this.props.data.node.title}</span>
-              </GridItem>
-            )
-          }
+
         }
 
 

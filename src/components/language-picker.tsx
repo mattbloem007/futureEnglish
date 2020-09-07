@@ -29,8 +29,9 @@ import FlagIcon from './FlagIcon'
             key={supportedLang}
             aria-label={`Change language to ${supportedLang}`}
             to={`/${supportedLang}${originalPath}`}
+            
           >
-            <FlagIcon code={supportedLang} size='1x' />
+            <FlagIcon code={supportedLang} size='3x' />
           </GatsbyLink>
         )
 

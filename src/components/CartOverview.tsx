@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
-
+import { loadStripe } from '@stripe/stripe-js'
+import { getProfile } from "../utils/auth"
 import { useShoppingCart } from 'use-shopping-cart'
+import {
+  useStripe,
+  Elements
+} from '@stripe/react-stripe-js';
 
 const buttonStyles = {
   fontSize: '13px',
@@ -14,15 +19,54 @@ const buttonStyles = {
   letterSpacing: '1.5px',
 }
 
+const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
+let email = "";
+
+
+
 const Cart = () => {
   const [loading, setLoading] = useState(false)
+  let user = getProfile()
+  const stripe = useStripe()
   /* Gets the totalPrice and a method for redirecting to stripe */
   const {
     formattedTotalPrice,
     redirectToCheckout,
     cartCount,
     clearCart,
+    cartDetails
   } = useShoppingCart()
+
+  if (user) {
+    email = user.email
+    user = user['https://app.io/user_metadata']
+  }
+
+  const createUser = async (customer, e) => {
+    //console.log(cartDetails)
+    let lineItems = []
+    Object.keys(cartDetails).map(key => {
+      console.log(cartDetails[key])
+      lineItems = [...lineItems, {price: cartDetails[key].sku, quantity: cartDetails[key].quantity}]
+    })
+
+
+    let user = {email: e, name: customer.student_name}
+    const body = JSON.stringify({
+      customer: user,
+      lineItems: lineItems,
+    })
+    await fetch("/.netlify/functions/createCustomer", {
+      method: "POST",
+      body,
+    })
+    .then((res) => res.json())
+    .then((result) => console.log(result))
+    .catch(error => console.error(error))
+
+
+  }
+
 
   return (
     <div>
@@ -36,7 +80,7 @@ const Cart = () => {
         disabled={loading}
         onClick={() => {
           setLoading(true)
-          redirectToCheckout()
+          createUser(user, email)
         }}
       >
         {loading ? 'Loading...' : 'Checkout'}

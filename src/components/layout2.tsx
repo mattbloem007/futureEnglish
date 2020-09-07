@@ -121,6 +121,8 @@ const SideBarInner = styled(Box)<{ bg: string }>`
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background: ${(props) => props.bg};
 
@@ -231,7 +233,7 @@ const Layout = ({ children, color }: LayoutProps) => {
               justifyContent="space-between"
             >
               <Box width={['3rem', '4rem', '5rem', '6rem']}>
-                <Link to="/" aria-label="LekoArts, Back to Home">
+                <Link to="/" aria-label="Future English, Back to Home">
                   <Logo />
                 </Link>
               </Box>
@@ -243,6 +245,7 @@ const Layout = ({ children, color }: LayoutProps) => {
                 flexDirection={['row', 'row', 'row', 'column']}
                 alignItems="flex-start"
               >
+              <LanguagePicker />
                 {data.navigation.nodes.map((item) => (
                   <Link to={item.link} key={item.name}>
                     {item.name}
@@ -270,7 +273,7 @@ Layout.defaultProps = defaultProps
 
 const query = graphql`
   query Layout2 {
-    navigation: allNavigationYaml {
+    navigation: allNavigation2Yaml {
       nodes {
         name
         link

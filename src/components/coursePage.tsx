@@ -106,21 +106,7 @@ export default function() {
               }
             }
 
-            instagram: file(sourceInstanceName: { eq: "images" }, name: { eq: "boston" }) {
-              childImageSharp {
-                fluid(quality: 95, maxWidth: 1920) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
-              }
-            }
-
-            aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "students3" }) {
-              childImageSharp {
-                fluid(quality: 95, maxWidth: 1200) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
-              }
-            }
+          
         }
     `);
 

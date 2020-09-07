@@ -36,13 +36,14 @@ const wrapper = promise =>
   exports.onCreatePage = async ({ page, actions: { createPage, deletePage, createRedirect } }) => {
     const isEnvDevelopment = process.env.NODE_ENV === 'development';
     const originalPath = page.path;
+    const login = null
 
-    if (page.path.match(/^\/account/)) {
-        page.matchPath = "/account/*"
-
-        // Update the page.
-        createPage(page)
-    }
+    // if (page.path.match(/^\/account/)) {
+    //     page.matchPath = "/account/*"
+    //
+    //     // Update the page.
+    //     createPage(page)
+    // }
     // Delete the original page (since we are gonna create localized versions of it) and add a
     // redirect header
     await deletePage(page);
@@ -68,6 +69,7 @@ const wrapper = promise =>
             ...page.context,
             originalPath,
             lang,
+            login,
           },
         });
       })
@@ -92,12 +94,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await wrapper(
     graphql(`
       {
-        projects: allProjectsYaml {
-          nodes {
-            slug
-            images
-          }
-        }
+
 
         wpgraphql{
 posts(first: 1000){
@@ -105,6 +102,9 @@ posts(first: 1000){
     node{
       id
       slug
+      excerpt
+      content
+      title
       tags {
         edges {
           node {
@@ -189,6 +189,9 @@ pages{
                 id: node.id,
                 slug: node.slug,
                 images: node.featuredImage,
+                content: node.content,
+                excerpt: node.excerpt,
+                title: node.title,
                 id2:  {"eq": `SitePage /${langu}/courses/${node.slug}`},
                 featuredImage: node.featuredImage,
                 originalPath: `/courses/${node.slug}`,
@@ -205,6 +208,9 @@ pages{
                 id: node.id,
                 slug: node.slug,
                 images: node.featuredImage,
+                content: node.content,
+                excerpt: node.excerpt,
+                title: node.title,
                 id2:  {"eq": `SitePage /${langu}/courses/${node.slug}`},
                 featuredImage: node.featuredImage,
                 originalPath: `/courses/${node.slug}`,
@@ -228,6 +234,9 @@ pages{
                   id: node.id,
                   slug: node.slug,
                   images: node.featuredImage,
+                  content: node.content,
+                  excerpt: node.excerpt,
+                  title: node.title,
                   id2:  {"eq": `SitePage /${langu}/blog/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/blog/${node.slug}`,
@@ -244,6 +253,9 @@ pages{
                   id: node.id,
                   slug: node.slug,
                   images: node.featuredImage,
+                  content: node.content,
+                  excerpt: node.excerpt,
+                  title: node.title,
                   id2:  {"eq": `SitePage /${langu}/blog/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/blog/${node.slug}`,
@@ -294,7 +306,6 @@ pages{
         });
 
       info.forEach((node) => {
-      //  console.log("INFO: ", node.slug)
         let langu = lang
         if (node.tags.edges.length > 0) {
           if(node.tags.edges[0].node.name != lang) {
@@ -307,6 +318,9 @@ pages{
                   id: node.id,
                   slug: node.slug,
                   images: node.featuredImage,
+                  content: node.content,
+                  excerpt: node.excerpt,
+                  title: node.title,
                   id2:  {"eq": `SitePage /${langu}/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/${node.slug}`,
@@ -324,6 +338,9 @@ pages{
                   id: node.id,
                   slug: node.slug,
                   images: node.featuredImage,
+                  content: node.content,
+                  excerpt: node.excerpt,
+                  title: node.title,
                   id2:  {"eq": `SitePage /${langu}/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/${node.slug}`,
@@ -355,7 +372,7 @@ exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNode
     let fileNode
 
     if (node.internal.type === `SitePage`) {
-console.log("NODE ", node.id)
+
      if (node.context != undefined) {
 
        if (node.context.featuredImage) {

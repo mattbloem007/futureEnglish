@@ -18,7 +18,7 @@ module.exports = {
     logo: config.siteLogo,
     headline: config.siteHeadline,
     siteLanguage: config.siteLanguage,
-    supportedLanguages: ["us", "cn", "eu", "es", "mx", "gh", "vn", "kr", "jp"],
+    supportedLanguages: ["us", "cn"], //"eu", "es", "mx", "gh", "vn", "kr", "jp"],
     defaultLanguage: "us",
     ogLanguage: config.ogLanguage,
     author: config.author,
@@ -31,6 +31,9 @@ module.exports = {
     'gatsby-plugin-typescript',
     'gatsby-transformer-yaml',
     {
+      resolve: `gatsby-plugin-material-ui`,
+    },
+    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'projects',
@@ -40,8 +43,8 @@ module.exports = {
     {
      resolve: `gatsby-source-stripe`,
      options: {
-       objects: ["Product", "Price", "Sku"],
-       secretKey: "sk_test_51HEEgYB5GFb0biC7j4eJzYohFGy40EkNnW0mwOtc92JpRR0RtSZOxafu1awTUQcQMbRcrx4BGDY2BTjR4YhpVET000frsUnQ6n",
+       objects: ["Product", "Price", "Sku", 'Subscription', 'Customer'],
+       secretKey: process.env.STRIPE_SECRET_KEY,
        downloadFiles: false,
      },
    },

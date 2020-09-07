@@ -1,31 +1,17 @@
-import auth0 from "auth0-js"
-import { navigate } from "gatsby"
-import Auth0Lock from 'auth0-lock';
 
 
-
-const isBrowser = typeof window !== "undefined"
-
-const tokens = {
-  accessToken: false,
-  idToken: false,
-  expiresAt: false,
-}
-
-let user = {}
-let hash = "";
-const genderOptions = [
+export const genderOptions = [
   { value: 'Male', label: 'Male' },
   { value: 'Female', label: 'Female' },
   { value: 'Other', label: 'Other'},
 ];
 
-const classOptions = [
+export const classOptions = [
   { value: 'Private', label: 'Private' },
   { value: 'Group', label: 'Group' },
 ];
 
-const engLevelOptions = [
+export const engLevelOptions = [
   { value: 'Beginner', label: 'Beginner' },
   { value: 'Low-Intermediate', label: 'Low-Intermediate' },
   { value: 'Intermediate', label: 'Intermediate'},
@@ -33,7 +19,7 @@ const engLevelOptions = [
   { value: 'Fluent', label: 'Fluent'},
 ];
 
-const timeOptions = [
+export const timeOptions = [
   {
     value: "GMT-12:00",
     label: "Etc/GMT-12"
@@ -407,173 +393,3 @@ const timeOptions = [
     label: "Pacific/Kiritimati"
   }
 ]
-
-const auth = isBrowser
-  ? new auth0.WebAuth({
-      domain: "future-eng.us.auth0.com", //process.env.AUTH0_DOMAIN,
-      clientID: "Qy7y5utJXi9uKlwT962PTeDXFTmXCJvu", //process.env.AUTH0_CLIENTID,
-      redirectUri: "http://localhost:8000/us/callback", //process.env.AUTH0_CALLBACK,
-      responseType: "token id_token",
-      scope: "openid profile email user_metadata",
-    })
-  : {}
-
-export const lock = isBrowser
-    ? new Auth0Lock('Qy7y5utJXi9uKlwT962PTeDXFTmXCJvu', 'future-eng.us.auth0.com', {
-
-              auth: {
-                  audience: 'https://future-eng.us.auth0.com/api/v2/',
-                  redirectUrl: 'http://localhost:8000/us/callback',
-                  responseType: 'token id_token',
-                  autoParseHash: false,
-                  params: {
-                      scope: 'openid email profile'
-                  }
-              },
-              additionalSignUpFields: [
-                {
-                  name: "student_name",
-                  placeholder: "Enter your name",
-                },
-                {
-                  name: "age",
-                  placeholder: "Enter your age",
-                },
-                {
-                  type: "select",
-                  name: "gender",
-                  options: genderOptions,
-                  placeholder: "Choose your gender",
-                },
-                {
-                  type: "select",
-                  name: "eng_level",
-                  placeholder: "Choose your english proficiency level",
-                  options: engLevelOptions,
-                },
-                {
-                  name: "country",
-                  placeholder: "Enter your country",
-                },
-                {
-                  name: "city",
-                  placeholder: "Enter your city",
-                },
-                {
-                  type: "select",
-                  name: "time_zone",
-                  placeholder: "Choose your time zone",
-                  options: timeOptions,
-                },
-                {
-                  name: "email",
-                  placeholder: "Enter your email",
-                },
-                {
-                  name: "number",
-                  placeholder: "Enter your number",
-                },
-                // {
-                //   type: "select",
-                //   name: "class_option",
-                //   options: classOptions,
-                //   placeholder: "Choose class option",
-                // },
-                {
-                  name: "parent_email",
-                  placeholder: "Enter a parent's email",
-                },
-                {
-                  name: "second_email_contact",
-                  placeholder: "Enter 2nd email"
-                }
-            ],
-          }
-      ).on('authenticated', function(authResult) {
-        console.log("IN Authenticatred", authResult)
-          if (authResult && authResult.accessToken && authResult.idToken) {
-              hash = authResult.idTokenPayload.at_hash
-              setSession(authResult);
-              // use authResult.idTokenPayload for profile information
-          }
-      }) : {};
-
-export const isAuthenticated = () => {
-  if (!isBrowser) {
-    return;
-  }
-
-  return localStorage.getItem("isLoggedIn") === "true"
-}
-
-export const silentAuth = callback => {
-  console.log("Authed", isAuthenticated())
-  // if (!isAuthenticated()) {
-  //   return callback()
-  // }
-
-  //auth.checkSession({}, setSession(callback))
-  lock.checkSession({}, setSession(callback))
-}
-
-export const login = () => {
-  if (!isBrowser) {
-    return
-  }
-
-//  auth.authorize()
-
-  lock.show()
-
-}
-
-export const logout = () => {
-  localStorage.setItem("isLoggedIn", false)
-  lock.logout()
-}
-
-const setSession = (cb = () => {}) => (err, authResult) => {
-  console.log(authResult)
-  if (err) {
-    console.log(err, "error setting session")
-    navigate("/")
-    cb()
-    return
-  }
-  console.log("RESULT BEFORE", authResult)
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    console.log("RESULT ", authResult)
-    let expiresAt = authResult.expiresIn * 1000 + new Date().getTime()
-    tokens.accessToken = authResult.accessToken
-    tokens.idToken = authResult.idToken
-    tokens.expiresAt = expiresAt
-    user = authResult.idTokenPayload
-    lock.getUserInfo(tokens.accessToken, function(error, profile) {
-
-      if (!error) {
-        console.log(profile)
-        user = profile
-      }
-      else {
-        console.log("Can't get profile", error)
-      }
-    })
-
-    localStorage.setItem("isLoggedIn", true)
-    navigate("/us/profile")
-    cb()
-  }
-}
-
-export const handleAuthentication = () => {
-  if (!isBrowser) {
-    return;
-  }
-  console.log("HASH", hash)
-  lock.resumeAuth(hash, setSession())
-//  auth.parseHash(setSession())
-}
-
-export const getProfile = () => {
-  return user
-}

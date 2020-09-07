@@ -10,6 +10,7 @@ const conatinerStyles = {
   padding: '1rem 0 1rem 0',
 }
 
+
 export default props => (
   <StaticQuery
     query={graphql`
@@ -24,10 +25,12 @@ export default props => (
               active
               currency
               unit_amount
+              unit_amount_decimal
               product {
                 id
                 name
               }
+              type
             }
           }
         }
@@ -36,11 +39,19 @@ export default props => (
     render={({ prices }) => (
       <div style={conatinerStyles}>
         {prices.edges.map(({ node: price }) => {
+          let mode = "payment"
+          if (price.type == "one_time") {
+            mode = "payment"
+          }
+          else if (price.type == "recurring") {
+            mode = "subscription"
+          }
           const newSku = {
             sku: price.id,
             name: price.product.name,
             price: price.unit_amount,
             currency: price.currency,
+            mode: mode,
           }
           return <SkuCard key={price.id} sku={newSku} />
         })}

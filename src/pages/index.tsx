@@ -9,6 +9,7 @@ import SEO from '../components/SEO'
 import { ChildImageSharp } from '../types'
 import InfoPages from '../components/infoPages'
 
+
 type PageProps = {
   data: {
     firstProject: {
@@ -109,7 +110,7 @@ const Instagram = styled(GridItem)`
   grid-area: instagram;
 `
 
-const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, threeProjects, aboutUs, instagram } }) => {
+const Index: React.FunctionComponent<PageProps> = () => {
   const pageAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0 },
@@ -149,48 +150,48 @@ const Index: React.FunctionComponent<PageProps> = ({ data: { firstProject, three
 
 export default Index
 
-export const query = graphql`
-  query Index {
-    firstProject: projectsYaml {
-      title
-      slug
-      cover {
-        childImageSharp {
-          fluid(quality: 95, maxWidth: 1200) {
-            ...GatsbyImageSharpFluid_withWebp
-          }
-        }
-      }
-    }
-    threeProjects: allProjectsYaml(limit: 3, skip: 1) {
-      nodes {
-        title
-        slug
-        cover {
-          childImageSharp {
-            fluid(quality: 95, maxWidth: 1200) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
-          }
-        }
-      }
-    }
-    aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "about-us" }) {
-      childImageSharp {
-        fluid(quality: 95, maxWidth: 1200) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-    instagram: file(sourceInstanceName: { eq: "images" }, name: { eq: "instagram" }) {
-      childImageSharp {
-        fluid(quality: 95, maxWidth: 1920) {
-          ...GatsbyImageSharpFluid_withWebp
-        }
-      }
-    }
-  }
- `
+// export const query = graphql`
+//   query Index {
+//     firstProject: projectsYaml {
+//       title
+//       slug
+//       cover {
+//         childImageSharp {
+//           fluid(quality: 95, maxWidth: 1200) {
+//             ...GatsbyImageSharpFluid_withWebp
+//           }
+//         }
+//       }
+//     }
+//     threeProjects: allProjectsYaml(limit: 3, skip: 1) {
+//       nodes {
+//         title
+//         slug
+//         cover {
+//           childImageSharp {
+//             fluid(quality: 95, maxWidth: 1200) {
+//               ...GatsbyImageSharpFluid_withWebp
+//             }
+//           }
+//         }
+//       }
+//     }
+//     aboutUs: file(sourceInstanceName: { eq: "images" }, name: { eq: "about-us" }) {
+//       childImageSharp {
+//         fluid(quality: 95, maxWidth: 1200) {
+//           ...GatsbyImageSharpFluid_withWebp
+//         }
+//       }
+//     }
+//     instagram: file(sourceInstanceName: { eq: "images" }, name: { eq: "instagram" }) {
+//       childImageSharp {
+//         fluid(quality: 95, maxWidth: 1920) {
+//           ...GatsbyImageSharpFluid_withWebp
+//         }
+//       }
+//     }
+//   }
+//  `
  //     wpgraphql{
  //       posts{
  //         edges{

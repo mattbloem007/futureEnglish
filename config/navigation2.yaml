@@ -1,0 +1,6 @@
+- name: "Profile"
+  link: "/profile"
+- name: "My Classes"
+  link: "/profile/my-classes"
+- name: "Purchase Classes"
+  link: "/profile/cart"

@@ -27,15 +27,22 @@
     "test:ci": "npm-run-all -s test:compile server:ci"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@stripe/react-stripe-js": "^1.1.2",
     "@stripe/stripe-js": "^1.8.0",
     "apollo-boost": "^0.4.9",
     "auth0-js": "^9.13.4",
+    "auth0-lock": "^11.26.3",
+    "auth0-lock-passwordless": "^2.2.3",
+    "auth0-react-lock": "^1.0.4",
     "babel-plugin-styled-components": "^1.10.7",
     "cosmicjs": "^3.3.1",
     "gatsby": "^2.23.17",
     "gatsby-image": "^2.4.12",
     "gatsby-plugin-google-analytics": "^2.3.9",
     "gatsby-plugin-manifest": "^2.4.17",
+    "gatsby-plugin-material-ui": "^2.1.10",
     "gatsby-plugin-modal-routing": "^1.2.0",
     "gatsby-plugin-netlify": "^2.3.11",
     "gatsby-plugin-offline": "^3.2.16",
@@ -104,7 +111,10 @@
     "style-loader": "^1.2.1"
   },
   "resolutions": {
-    "cypress": "^4.9.0"
+    "cypress": "^4.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-transition-group": "^4.1.1"
   },
   "repository": {
     "type": "git",

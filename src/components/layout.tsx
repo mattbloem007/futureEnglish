@@ -121,6 +121,8 @@ const SideBarInner = styled(Box)<{ bg: string }>`
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: space-between;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   background: ${(props) => props.bg};
 
@@ -230,8 +232,23 @@ const Layout = ({ children, color }: LayoutProps) => {
               alignItems={['center', 'center', 'center', 'flex-start']}
               justifyContent="space-between"
             >
+
+            <Box width={['3rem', '4rem', '5rem', '6rem']}>
+              <Nav
+                color={color}
+                mt={[0, 0, 0, 0]}
+                as="nav"
+                flexWrap="wrap"
+                flexDirection={['row', 'row', 'row']}
+                alignItems="flex-start"
+              >
+                <Link to="/login" key="login">
+                  Log In
+                </Link>
+              </Nav>
+            </Box>
               <Box width={['3rem', '4rem', '5rem', '6rem']}>
-                <Link to="/" aria-label="LekoArts, Back to Home">
+                <Link to="/" aria-label="Future English, Back to Home">
                   <Logo />
                 </Link>
               </Box>
