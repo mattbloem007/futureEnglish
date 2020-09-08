@@ -26,8 +26,8 @@ const CartExample = (props) => {
       <CartProvider
         mode="client-only"
         stripe={stripePromise}
-        successUrl={`${window.location.origin}/`}
-        cancelUrl={`http://localhost:8000${originalPath}`}
+        successUrl={`https://englishacademy.netlify.app/${originalPath}`}
+        cancelUrl={`https://englishacademy.netlify.app/${originalPath}`}
         currency="USD"
         allowedCountries={['US', 'GB', 'CA']}
         billingAddressCollection={true}
