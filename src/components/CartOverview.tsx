@@ -6,6 +6,9 @@ import {
   useStripe,
   Elements
 } from '@stripe/react-stripe-js';
+import emailjs from 'emailjs-com';
+import {usePageContext} from '../../PageContext'
+
 
 const buttonStyles = {
   fontSize: '13px',
@@ -19,7 +22,6 @@ const buttonStyles = {
   letterSpacing: '1.5px',
 }
 
-const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
 let email = "";
 
 
@@ -28,6 +30,7 @@ const Cart = () => {
   const [loading, setLoading] = useState(false)
   let user = getProfile()
   const stripe = useStripe()
+  const { originalPath, lang } = usePageContext()
   /* Gets the totalPrice and a method for redirecting to stripe */
   const {
     formattedTotalPrice,
@@ -43,26 +46,50 @@ const Cart = () => {
   }
 
   const createUser = async (customer, e) => {
-    //console.log(cartDetails)
+    console.log(cartDetails)
+    const stripePromise = await loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
     let lineItems = []
+    let message = "There has been a new order for the following product(s) from " + customer.student_name + ":\n\n"
+    let listItems = "";
     Object.keys(cartDetails).map(key => {
       console.log(cartDetails[key])
+      listItems = listItems + cartDetails[key].name + " valued at: " + cartDetails[key].formattedValue + "\n"
       lineItems = [...lineItems, {price: cartDetails[key].sku, quantity: cartDetails[key].quantity}]
     })
+    message = listItems;
 
+    var template_params = {
+       "reply_to": e,
+       "from_name": customer.student_name,
+       "to_name": "Dylan",
+       "message_html": message
+    }
 
-    let user = {email: e, name: customer.student_name}
-    const body = JSON.stringify({
-      customer: user,
-      lineItems: lineItems,
-    })
-    await fetch("/.netlify/functions/createCustomer", {
-      method: "POST",
-      body,
-    })
-    .then((res) => res.json())
-    .then((result) => console.log(result))
-    .catch(error => console.error(error))
+    var service_id = "default_service";
+    var template_id = "template_sr6blae";
+    var user_id = "user_wLPGPl2w2ETFdTUDNZQP2";
+    emailjs.send(service_id, template_id, template_params, user_id);
+
+  //  redirectToCheckout();
+  console.log(stripePromise)
+  stripePromise.redirectToCheckout({mode: "subscription", successUrl: `https://englishacademy.netlify.app/${lang}${originalPath}`,
+  cancelUrl: `https://englishacademy.netlify.app/${lang}${originalPath}`, lineItems: lineItems})
+
+    // const body = JSON.stringify({
+    //   checkout: user
+    // })
+    // console.log(body, " ", user)
+    //
+    // await fetch("http://localhost:8888/.netlify/functions/redirectToCheckout", {
+    //   method: "POST",
+    //   body,
+    // })
+    // .then((res) => res.json())
+    // .then((result) => {
+    //   console.log(result)
+    //
+    // })
+    // .catch(error => console.error(error))
 
 
   }

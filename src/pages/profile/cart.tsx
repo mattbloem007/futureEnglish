@@ -15,7 +15,7 @@ import { Elements } from '@stripe/react-stripe-js';
 const stripePromise = loadStripe(process.env.GATSBY_STRIPE_PUBLISHABLE_KEY)
 
 const CartExample = (props) => {
-  const {originalPath} = usePageContext()
+  const {originalPath, lang} = usePageContext()
   console.log(props)
   return (
 
@@ -26,8 +26,8 @@ const CartExample = (props) => {
       <CartProvider
         mode="client-only"
         stripe={stripePromise}
-        successUrl={`https://englishacademy.netlify.app/${originalPath}`}
-        cancelUrl={`https://englishacademy.netlify.app/${originalPath}`}
+        successUrl={`https://englishacademy.netlify.app/${lang}${originalPath}`}
+        cancelUrl={`https://englishacademy.netlify.app/${lang}${originalPath}`}
         currency="USD"
         allowedCountries={['US', 'GB', 'CA']}
         billingAddressCollection={true}

@@ -423,7 +423,7 @@ export const lock = isBrowser
 
               auth: {
                   audience: 'https://future-eng.us.auth0.com/api/v2/',
-                  redirectUrl: 'https://englishacademy.netlify.app/us/callback',
+                  redirectUrl: 'https://englishacademy.netlify.app/us/profile', //'http://localhost:8000/us/profile',//
                   responseType: 'token id_token',
                   autoParseHash: false,
                   params: {
@@ -536,7 +536,6 @@ const setSession = (cb = () => {}) => (err, authResult) => {
   console.log(authResult)
   if (err) {
     console.log(err, "error setting session")
-    navigate("/")
     cb()
     return
   }
@@ -560,7 +559,7 @@ const setSession = (cb = () => {}) => (err, authResult) => {
     })
 
     localStorage.setItem("isLoggedIn", true)
-    navigate("/us/profile")
+  //  navigate("/us/profile")
     cb()
   }
 }
