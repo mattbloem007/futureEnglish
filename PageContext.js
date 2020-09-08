@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { silentAuth } from "./src/utils/auth"
-import i18n from './i18next';
+//import i18n from './i18next';
 //import Auth from './src/utils/Auth2'
 
 const PageContext = React.createContext({});
