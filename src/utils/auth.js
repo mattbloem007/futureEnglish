@@ -423,7 +423,7 @@ export const lock = isBrowser
 
               auth: {
                   audience: 'https://future-eng.us.auth0.com/api/v2/',
-                  redirectUrl: 'http://localhost:8000/us/callback',
+                  redirectUrl: 'https://englishacademy.netlify.app/us/callback',
                   responseType: 'token id_token',
                   autoParseHash: false,
                   params: {
