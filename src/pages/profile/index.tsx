@@ -488,7 +488,7 @@ changeField = (fieldId) => {
 
                    {!avatar && !avatarUrl && (
                      <>
-                       {user.photoURL && (
+                       {avatarUrl && (
                          <Badge
                            classes={{ badge: classes.badge }}
                            badgeContent={
@@ -524,7 +524,7 @@ changeField = (fieldId) => {
                                <Avatar
                                  className={classes.avatar}
                                  alt="Avatar"
-                                 src={user.photoURL}
+                                 src={avatarUrl}
                                />
                              </Badge>
                            )}
@@ -533,13 +533,13 @@ changeField = (fieldId) => {
                              <Avatar
                                className={classes.avatar}
                                alt="Avatar"
-                               src={user.photoURL}
+                               src={avatarUrl}
                              />
                            )}
                          </Badge>
                        )}
 
-                       {!user.photoURL && (
+                       {!avatarUrl && (
                          <>
                            {loadingAvatar && (
                              <Badge
@@ -715,7 +715,7 @@ changeField = (fieldId) => {
 
                {!avatar && !avatarUrl && (
                  <>
-                   {user.photoURL && (
+                   {avatarUrl && (
                      <Badge
                        classes={{ badge: classes.badge }}
                        badgeContent={
@@ -742,7 +742,7 @@ changeField = (fieldId) => {
                            <Avatar
                              className={classes.avatar}
                              alt="Avatar"
-                             src={user.photoURL}
+                             src={avatarUrl}
                            />
                          </Badge>
                        )}
@@ -751,13 +751,13 @@ changeField = (fieldId) => {
                          <Avatar
                            className={classes.avatar}
                            alt="Avatar"
-                           src={user.photoURL}
+                           src={avatarUrl}
                          />
                        )}
                      </Badge>
                    )}
 
-                   {!user.photoURL && (
+                   {!avatarUrl && (
                      <>
                        {loadingAvatar && (
                          <Badge
