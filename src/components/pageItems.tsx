@@ -15,8 +15,8 @@ const Area = styled(animated.div)`
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 35vw 40vw 25vw;
   grid-template-areas:
-    'first-project about-us about-us'
-    'first-project three-projects grid-item'
+    'first-project first-project first-project'
+    'mid about-us about-us'
     'instagram instagram instagram';
 
   @media (max-width: ${(props) => props.theme.breakpoints[3]}) {
@@ -59,14 +59,12 @@ const Area = styled(animated.div)`
 const FirstProject = styled(GridItem)`
   grid-area: first-project;
 `
+
+const Mid = styled(GridItem)`
+  grid-area: mid;
+`
 const ThreeProjects = styled.div`
   grid-area: three-projects;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  @media (max-width: ${(props) => props.theme.breakpoints[1]}) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-  }
 `
 const AboutUs = styled(GridItem)`
   grid-area: about-us;
@@ -82,9 +80,10 @@ class PageItem extends React.Component {
       if (this.props.file.node.childImageSharp) {
         isImage = true;
       }
-      console.log(this.props.data, ' ', this.props.title)
+
       switch (this.props.title) {
-        case "0":
+        case 0:
+        console.log("Made first project", this.props.data.node)
         return (
           <FirstProject to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
             {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
@@ -93,20 +92,33 @@ class PageItem extends React.Component {
 
         );
         break;
-        {/**case "1":
+      case 1:
+      console.log("Made three project", this.props.data.node)
           return (
-            <ThreeProjects to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+            <Mid to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
               {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
               <span>{this.props.data.node.title}</span>
-            </ThreeProjects>
+            </Mid>
 
           );
-        break; */}
+        break;
+
+        case 2:
+        console.log("Made about project", this.props.data.node)
+            return (
+              <AboutUs to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+                <span>{this.props.data.node.title}</span>
+              </AboutUs>
+
+            );
+          break;
 
         default:
         if (this.props.data.node.categories) {
           console.log(this.props.data.node.categories.nodes, _.some(this.props.data.node.categories.nodes, {"name": "photos"}))
           if (!(_.some(this.props.data.node.categories.nodes, {"name": "photos"}))) {
+            console.log("Made grid item", this.props.data.node)
             return (
               <GridItem to={`/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
@@ -114,25 +126,28 @@ class PageItem extends React.Component {
               </GridItem>
             )
           }
-          else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic1</p>\n") {
+          /**else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic1</p>\n") {
             return (
               <AboutUs to="#">
                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
               </AboutUs>
             );
-          }
+          }*/
           else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"}) && this.props.data.node.excerpt == "<p>pic2</p>\n") {
+            console.log("Made instagram", this.props.data.node)
             return (
               <Instagram to="#">
                 {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
               </Instagram>
             );
           }
-          else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"})) {
+         else if (_.some(this.props.data.node.categories.nodes, {"name": "photos"})) {
+           console.log("Made nothing", this.props.data.node)
             return (
-              <GridItem to="#">
-                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
-              </GridItem>
+              <div></div>
+            /**<GridItem to="#">
+              {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+            </GridItem>*/
             )
           }
 
