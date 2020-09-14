@@ -60,7 +60,9 @@ export const query = graphql`
           unit_amount_decimal
           product {
             id
+            active
             name
+            description
           }
           type
         }

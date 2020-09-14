@@ -147,47 +147,56 @@ const SkuCard = ({prices}) => {
                         name: tier.product.name,
                         price: tier.unit_amount,
                         currency: tier.currency,
+                        description: tier.product.description,
+                        active: tier.product.active
                       }
-                      return (
+
+                      if (newSku.active == true) {
+                        return (
 
 
-                      <Grid item key={newSku.name} xs={12} sm={newSku.name === 'Enterprise' ? 12 : 6} md={4}>
-                        <Card>
-                          <CardHeader
-                            title={newSku.name}
-                            titleTypographyProps={{ align: 'center' }}
-                            subheaderTypographyProps={{ align: 'center' }}
-                            action={newSku.name === 'Pro' ? <StarIcon /> : null}
-                            className={classes.cardHeader}
-                          />
-                          <CardContent>
-                            <div className={classes.cardPricing}>
-                              <Typography component="h2" variant="h3" color="textPrimary">
-                                {formatCurrencyString({
-                                          value: parseInt(newSku.price),
-                                          currency: newSku.currency,
-                                        })}
-                              </Typography>
-                              <Typography variant="h6" color="textSecondary">
-                                /mo
-                              </Typography>
-                            </div>
-                            {/**<ul>
-                              {tier.description.map((line) => (
-                                <Typography component="li" variant="subtitle1" align="center" key={line}>
-                                  {line}
+                        <Grid item key={newSku.name} xs={12} sm={newSku.name === 'Enterprise' ? 12 : 6} md={4}>
+                          <Card>
+                            <CardHeader
+                              title={newSku.name}
+                              titleTypographyProps={{ align: 'center' }}
+                              subheaderTypographyProps={{ align: 'center' }}
+                              action={newSku.name === 'Pro' ? <StarIcon /> : null}
+                              className={classes.cardHeader}
+                            />
+                            <CardContent>
+                              <div className={classes.cardPricing}>
+                                <Typography component="h3" variant="h4" color="textPrimary">
+                                  {formatCurrencyString({
+                                            value: parseInt(newSku.price),
+                                            currency: newSku.currency,
+                                          })}
                                 </Typography>
-                              ))}
-                            </ul>*/}
-                          </CardContent>
-                          <CardActions>
-                            <Button fullWidth color="primary" onClick={() => addItem(newSku)}>
-                              Add to Cart
-                            </Button>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    )
+                                <Typography variant="h6" color="textSecondary">
+                                  /mo
+                                </Typography>
+                              </div>
+                              <ul>
+
+                                  <Typography component="li" variant="subtitle1" align="center">
+                                    {newSku.description}
+                                  </Typography>
+
+                              </ul>
+                            </CardContent>
+                            <CardActions>
+                              <Button fullWidth color="primary" onClick={() => addItem(newSku)}>
+                                Add to Cart
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
+                      )
+                      }
+                      else {
+                        return <div></div>
+                      }
+
                     })}
                   </Grid>
                 </Container>
