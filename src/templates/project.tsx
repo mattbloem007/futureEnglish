@@ -45,7 +45,7 @@ const PButton = styled(Button)<{ color: string }>`
 `
 
 const Project = ({ data, pageContext }) => {
-  console.log("Context: ", data)
+  console.log("Context: ", pageContext)
   const categoryAnimation = useSpring({
     config: config.slow,
     from: { opacity: 0, transform: 'translate3d(0, -30px, 0)' },
@@ -69,7 +69,6 @@ const Project = ({ data, pageContext }) => {
 
         title={pageContext.title}
         desc={pageContext.excerpt}
-        banner={data.file.childImageSharp.resize.src}
         individual
       />
       <PBox py={10} px={[6, 6, 8, 10]}>

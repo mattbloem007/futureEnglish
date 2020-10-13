@@ -145,6 +145,8 @@ pages{
     node{
       id
       slug
+      content
+      title
     }
   }
 }
@@ -365,21 +367,31 @@ pages{
         }
 
         });
+
+        allPages.forEach(({ node }) => {
+          console.log(node)
+          let langu = lang
+
+            createPage({
+                path: `/${langu}/${node.slug}`,
+                component: projectTemplate,
+                context: {
+                    id: node.id,
+                    slug: node.slug,
+                    content: node.content,
+                    excerpt: "",
+                    title: node.title,
+                    lang: langu
+                }
+            });
+
+        });
   })
 
 
 
 
-  // allPages.forEach(({ node }) => {
-  //     createPage({
-  //         path: node.slug,
-  //         component: path.resolve("./src/templates/blog.js"),
-  //         context: {
-  //             id: node.id,
-  //             slug: node.slug
-  //         }
-  //     });
-  // });
+
 }
 
 exports.onCreateNode = async ({ node, getNode, actions, store, cache, createNodeId, _auth, }) => {
