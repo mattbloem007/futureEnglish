@@ -38,16 +38,16 @@ const wrapper = promise =>
     const originalPath = page.path;
     const login = null
 
-    if (page.path.match(/^\/profile/)) {
-        page.matchPath = "/profile/*"
-
-        // Update the page.
-        createPage(page)
-    }
+    // if (page.path.match(/^\/profile/)) {
+    //     page.matchPath = "/profile/*"
+    //
+    //     // Update the page.
+    //     createPage(page)
+    // }
 
     config.siteMetadata.supportedLanguages.map(async lang => {
          const localizedPath = `/${lang}${page.path}`;
-         
+
     createPage({
           ...page,
           path: localizedPath,
