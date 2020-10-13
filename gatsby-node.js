@@ -38,12 +38,12 @@ const wrapper = promise =>
     const originalPath = page.path;
     const login = null
 
-    // if (page.path.match(/^\/account/)) {
-    //     page.matchPath = "/account/*"
-    //
-    //     // Update the page.
-    //     createPage(page)
-    // }
+    if (page.path.match(/^\/profile/)) {
+        page.matchPath = "/profile/*"
+
+        // Update the page.
+        createPage(page)
+    }
     // Delete the original page (since we are gonna create localized versions of it) and add a
     // redirect header
     await deletePage(page);

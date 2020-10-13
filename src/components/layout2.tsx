@@ -9,6 +9,12 @@ import theme from '../../config/theme'
 import reset from '../styles/reset'
 import Logo from './logo'
 import LanguagePicker from './language-picker'
+import { Router } from "@reach/router"
+
+import CartExample from '../pages/profile/cart'
+import Account from '../pages/profile/index'
+import Orders from '../pages/profile/my-classes'
+
 
 const GlobalStyles = createGlobalStyle`
   *::before,
@@ -252,6 +258,11 @@ const Layout = ({ children, color }: LayoutProps) => {
                   </Link>
                 ))}
               </Nav>
+              <Router>
+                <Account path="/profile" />
+                <CartExample path="/profile/cart" />
+                <Orders path="/profile/my-classes" />
+              </Router>
             </Flex>
           </SideBarInner>
           <Main>{children}</Main>
