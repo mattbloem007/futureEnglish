@@ -44,6 +44,21 @@ const wrapper = promise =>
         // Update the page.
         createPage(page)
     }
+
+    config.siteMetadata.supportedLanguages.map(async lang => {
+         const localizedPath = `/${lang}${page.path}`;
+         
+    createPage({
+          ...page,
+          path: localizedPath,
+          context: {
+            ...page.context,
+            originalPath,
+            lang,
+            login,
+          },
+        });
+      })
     // Delete the original page (since we are gonna create localized versions of it) and add a
     // redirect header
     // await deletePage(page);
