@@ -44,7 +44,7 @@ module.exports = {
      resolve: `gatsby-source-stripe`,
      options: {
        objects: ["Product", "Price", "Sku", 'Subscription', 'Customer'],
-       secretKey: process.env.STRIPE_SECRET_KEY,
+       secretKey: "sk_test_51HEEgYB5GFb0biC7j4eJzYohFGy40EkNnW0mwOtc92JpRR0RtSZOxafu1awTUQcQMbRcrx4BGDY2BTjR4YhpVET000frsUnQ6n",
        downloadFiles: false,
      },
    },
