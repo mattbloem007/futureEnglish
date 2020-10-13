@@ -72,8 +72,8 @@ const Cart = () => {
 
   //  redirectToCheckout();
   console.log(stripePromise)
-  stripePromise.redirectToCheckout({mode: "subscription", successUrl: `https://englishacademy.netlify.app/${lang}${originalPath}`,
-  cancelUrl: `https://englishacademy.netlify.app/${lang}${originalPath}`, lineItems: lineItems})
+  stripePromise.redirectToCheckout({mode: "subscription", successUrl: `https://www.futureleadershiptutoringservice.com/${lang}${originalPath}`,
+  cancelUrl: `https://www.futureleadershiptutoringservice.com/${lang}${originalPath}`, lineItems: lineItems})
 
     // const body = JSON.stringify({
     //   checkout: user
