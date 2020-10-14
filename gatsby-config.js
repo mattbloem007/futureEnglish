@@ -44,7 +44,7 @@ module.exports = {
      resolve: `gatsby-source-stripe`,
      options: {
        objects: ["Product", "Price", "Sku", 'Subscription', 'Customer'],
-       secretKey: "sk_test_51HEEgYB5GFb0biC7j4eJzYohFGy40EkNnW0mwOtc92JpRR0RtSZOxafu1awTUQcQMbRcrx4BGDY2BTjR4YhpVET000frsUnQ6n",
+       secretKey: "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",
        downloadFiles: false,
      },
    },

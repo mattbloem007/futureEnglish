@@ -29,6 +29,7 @@ export default props => (
               product {
                 id
                 name
+                livemode
               }
               type
             }

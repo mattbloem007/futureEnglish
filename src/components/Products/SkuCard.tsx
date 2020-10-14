@@ -142,16 +142,18 @@ const SkuCard = ({prices}) => {
                 <Container maxWidth="md" component="main">
                   <Grid container spacing={5} alignItems="flex-end">
                     {prices.edges.map(({ node:tier}) => {
+                      console.log("livemode: ", tier.product.livemode)
                       const newSku  = {
                         sku: tier.id,
                         name: tier.product.name,
                         price: tier.unit_amount,
                         currency: tier.currency,
                         description: tier.product.description,
-                        active: tier.product.active
+                        active: tier.product.active,
+                        livemode: tier.product.livemode
                       }
 
-                      if (newSku.active == true) {
+                      if (newSku.active == true && newSku.livemode == true) {
                         return (
 
 
