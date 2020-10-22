@@ -114,7 +114,8 @@ class CourseItem extends React.Component {
               </GridItem>
             )
           }
-          else if (this.props.lang == "us") {
+          //else if (this.props.lang == "us") {
+          else {
             console.log("Made mids project", this.props.data.node)
             return (
               <Mid to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
@@ -123,15 +124,15 @@ class CourseItem extends React.Component {
               </Mid>
             )
           }
-          else {
-            console.log("Made grid cn project", this.props.data.node)
-            return (
-              <GridItem to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
-                {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
-                <span>{this.props.data.node.title}</span>
-              </GridItem>
-            )
-          }
+          // else {
+          //   console.log("Made grid cn project", this.props.data.node)
+          //   return (
+          //     <GridItem to={`/courses/${this.props.data.node.slug}`} aria-label={`View project "${this.props.data.node.title}"`}>
+          //       {isImage? <Img fluid={this.props.file.node.childImageSharp.fluid} />: null}
+          //       <span>{this.props.data.node.title}</span>
+          //     </GridItem>
+          //   )
+          // }
         }
       }
 }
@@ -147,9 +148,15 @@ export default function(props) {
           if (props.remove && e.node.id === props.remove) return;
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
-                console.log(node.parent.id)
-                if (node.parent.id == `SitePage /${lang}/courses/` + e.node.slug) {
-                  return node
+                if (lang != undefined) {
+                  if (node.parent.id == `SitePage /${lang}/courses/` + e.node.slug) {
+                    return node
+                  }
+                }
+                else {
+                  if (node.parent.id == `SitePage /courses/` + e.node.slug) {
+                    return node
+                  }
                 }
               }
             })

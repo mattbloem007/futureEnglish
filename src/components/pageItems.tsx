@@ -76,7 +76,7 @@ class PageItem extends React.Component {
 
     render() {
       let isImage = false;
-      console.log("FILE", this.props.file)
+      console.log("Cat", this.props.data.node.categories)
       if (this.props.file.node.childImageSharp) {
         isImage = true;
       }
@@ -198,6 +198,7 @@ export default function(props) {
                   }
                 }
                 else {
+                  console.log("PARENT ", node.parent.id)
                   if (node.parent.id == `SitePage /` + e.node.slug) {
                     return node
                   }
