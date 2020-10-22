@@ -12,7 +12,7 @@ const styles = {
 const Logo = () => {
   const { lang } = usePageContext();
 
-  if (lang == 'us') {
+  if (lang == undefined || lang == "us") {
     return (
       <div>
         <img style={styles} src={logo_us} />

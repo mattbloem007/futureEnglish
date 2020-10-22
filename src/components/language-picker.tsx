@@ -23,17 +23,33 @@ import FlagIcon from './FlagIcon'
     <div className="language-selector-container">
       {site.siteMetadata.supportedLanguages.map(supportedLang => {
 
-        return (
+        if (supportedLang == "us") {
+            return (
+              <GatsbyLink
+                key={supportedLang}
+                aria-label={`Change language to ${supportedLang}`}
+                to={`/`}
 
-          <GatsbyLink
-            key={supportedLang}
-            aria-label={`Change language to ${supportedLang}`}
-            to={`/${supportedLang}${originalPath}`}
-            
-          >
-            <FlagIcon code={supportedLang} size='3x' />
-          </GatsbyLink>
-        )
+              >
+                <FlagIcon code={supportedLang} size='3x' />
+              </GatsbyLink>
+            )
+        }
+        else {
+          return (
+
+            <GatsbyLink
+              key={supportedLang}
+              aria-label={`Change language to ${supportedLang}`}
+              to={`/${supportedLang}`}
+
+            >
+              <FlagIcon code={supportedLang} size='3x' />
+            </GatsbyLink>
+          )
+        }
+
+
 
       })}
     </div>

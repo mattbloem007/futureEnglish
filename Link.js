@@ -4,9 +4,14 @@ import { usePageContext } from './PageContext';
 
 const Link = ({ to, ref, ...rest }) => {
   const { lang } = usePageContext();
-  console.log("Lang ", lang)
 
-  return <GatsbyLink {...rest} to={`/${lang}${to}`} />;
+  if (lang != undefined) {
+    return <GatsbyLink {...rest} to={`/${lang}${to}`} />;
+  }
+  else {
+    return <GatsbyLink {...rest} to={`${to}`} />;
+  }
+
 };
 
 export default Link;

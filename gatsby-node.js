@@ -46,18 +46,21 @@ const wrapper = promise =>
     // }
 
     config.siteMetadata.supportedLanguages.map(async lang => {
-         const localizedPath = `/${lang}${page.path}`;
+      if (lang != "us") {
+        const localizedPath = `/${lang}${page.path}`;
 
-    createPage({
-          ...page,
-          path: localizedPath,
-          context: {
-            ...page.context,
-            originalPath,
-            lang,
-            login,
-          },
-        });
+         createPage({
+               ...page,
+               path: localizedPath,
+               context: {
+                 ...page.context,
+                 originalPath,
+                 lang,
+                 login,
+               },
+             });
+      }
+
       })
     // Delete the original page (since we are gonna create localized versions of it) and add a
     // redirect header
@@ -219,7 +222,7 @@ pages{
       else if (lang == "us"){
         langu = lang
         createPage({
-            path: `/${langu}/courses/${node.slug}`,
+            path: `/courses/${node.slug}`,
             component: projectTemplate,
             context: {
                 id: node.id,
@@ -228,10 +231,10 @@ pages{
                 content: node.content,
                 excerpt: node.excerpt,
                 title: node.title,
-                id2:  {"eq": `SitePage /${langu}/courses/${node.slug}`},
+                id2:  {"eq": `SitePage /courses/${node.slug}`},
                 featuredImage: node.featuredImage,
                 originalPath: `/courses/${node.slug}`,
-                lang: langu
+              //  lang: langu
             }
           })
       }
@@ -264,7 +267,7 @@ pages{
         else if (lang == "us"){
           langu = lang
           createPage({
-              path: `/${langu}/blog/${node.slug}`,
+              path: `/blog/${node.slug}`,
               component: projectTemplate,
               context: {
                   id: node.id,
@@ -273,10 +276,10 @@ pages{
                   content: node.content,
                   excerpt: node.excerpt,
                   title: node.title,
-                  id2:  {"eq": `SitePage /${langu}/blog/${node.slug}`},
+                  id2:  {"eq": `SitePage /blog/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/blog/${node.slug}`,
-                  lang: langu
+                  //lang: langu
               }
             })
         }
@@ -306,16 +309,16 @@ pages{
         else if (lang == "us"){
           langu = lang
           createPage({
-              path: `/${langu}/register/${node.slug}`,
+              path: `/register/${node.slug}`,
               component: projectTemplate,
               context: {
                   id: node.id,
                   slug: node.slug,
                   images: node.featuredImage,
-                  id2:  {"eq": `SitePage /${langu}/register/${node.slug}`},
+                  id2:  {"eq": `SitePage /register/${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/register/${node.slug}`,
-                  lang: langu
+                //  lang: langu
               }
             })
         }
@@ -349,7 +352,7 @@ pages{
           langu = lang
           console.log(langu, " ", node.slug, " ", node.id)
           createPage({
-              path: `/${langu}/${node.slug}`,
+              path: `/${node.slug}`,
               component: projectTemplate,
               context: {
                   id: node.id,
@@ -358,10 +361,10 @@ pages{
                   content: node.content,
                   excerpt: node.excerpt,
                   title: node.title,
-                  id2:  {"eq": `SitePage /${langu}/${node.slug}`},
+                  id2:  {"eq": `SitePage /${node.slug}`},
                   featuredImage: node.featuredImage,
                   originalPath: `/${node.slug}`,
-                  lang: langu
+                //  lang: langu
               }
             })
         }

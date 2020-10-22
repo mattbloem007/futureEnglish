@@ -7,6 +7,7 @@ import { config, useSpring, animated } from 'react-spring'
 import Layout from '../components/layout'
 import { Box, AnimatedBox, Button } from '../elements'
 import SEO from '../components/SEO'
+import Link from '../../Link'
 
 const PBox = styled(AnimatedBox)`
   max-width: 1400px;
@@ -83,12 +84,14 @@ const Project = ({ data, pageContext }) => {
             {isImage ? <Img alt={data.file.name} key={data.file.childImageSharp.fluid.srcSet} fluid={data.file.childImageSharp.fluid} /> : null}
         </PBox>
       </Content>
-      {/**<PBox style={{ textAlign: 'center' }} py={10} px={[6, 6, 8, 10]}>
-        <h2>Want to start your own project?</h2>
+      <PBox style={{ textAlign: 'center' }} py={10} px={[6, 6, 8, 10]}>
+        <h2>Sign up below to buy our courses and start learning with Future Leadership. First Class is always free</h2>
         <PButton color="#90BDDF" py={4} px={8}>
-          Contact Us
+        <Link to="/login" key="login">
+          Sign Up
+        </Link>
         </PButton>
-      </PBox>*/}
+      </PBox>
     </Layout>
   )
 }

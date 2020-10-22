@@ -189,14 +189,25 @@ export default function(props) {
           if (props.remove && e.node.id === props.remove) return;
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
-                console.log(node.parent.id, " ", e.node.slug)
-                if (node.parent.id == `SitePage /${lang}/` + e.node.slug) {
-                  return node
+                if (lang != undefined) {
+                  if (node.parent.id == `SitePage /${lang}/` + e.node.slug) {
+                    return node
+                  }
+                  else if (node.parent.id == `SitePlugin /${lang}/` + e.node.slug) {
+                    return node
+                  }
                 }
-                else if (node.parent.id == `SitePlugin /${lang}/` + e.node.slug) {
-                  return node
+                else {
+                  if (node.parent.id == `SitePage /` + e.node.slug) {
+                    return node
+                  }
+                  else if (node.parent.id == `SitePlugin /` + e.node.slug) {
+                    return node
+                  }
                 }
+
               }
+
             })
 
             if (fileIndex) {

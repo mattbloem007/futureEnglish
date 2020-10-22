@@ -4,7 +4,7 @@ import { graphql, useStaticQuery } from 'gatsby'
 import Link from '../../Link'
 import { readableColor } from 'polished'
 import 'typeface-work-sans'
-import { Box, Flex } from '../elements'
+import { Box, Flex, Button } from '../elements'
 import theme from '../../config/theme'
 import reset from '../styles/reset'
 import Logo from './logo'
@@ -113,6 +113,11 @@ const Wrapper = styled.div`
   }
 `
 
+const PButton = styled(Button)<{ color: string }>`
+  background: ${(props) => (props.color === 'white' ? 'black' : props.color)};
+  color: ${(props) => readableColor(props.color === 'white' ? 'black' : props.color)};
+`
+
 const SideBarInner = styled(Box)<{ bg: string }>`
   position: fixed;
   height: 100%;
@@ -176,9 +181,7 @@ const Main = styled.main`
 `
 
 const Footer = styled.footer<{ color: string }>`
-  position: fixed;
   width: ${(props) => props.theme.sidebarWidth.big};
-  bottom: 0;
 
   background: ${(props) => props.color};
 
@@ -225,14 +228,25 @@ const Layout = ({ children, color }: LayoutProps) => {
       <>
         <GlobalStyles />
         <Wrapper>
+
           <SideBarInner bg={color} as="aside" p={[6, 6, 8]}>
+
             <Flex
               flexWrap="nowrap"
               flexDirection={['row', 'row', 'row', 'column']}
               alignItems={['center', 'center', 'center', 'flex-start']}
               justifyContent="space-between"
             >
-
+            <Footer color={color}>
+              <Box p={[1, 1, 5]} fontSize={0} width={['33rem', '34rem', '33rem', '14rem']}>
+              <PButton color="#ff0000" py={4} px={4}>
+                <Link to="/login">
+                  Register to Enroll in Courses Now
+                </Link>
+                </PButton>
+              </Box>
+            </Footer>
+            
             <Box width={['3rem', '4rem', '5rem', '6rem']}>
               <Nav
                 color={color}
@@ -242,9 +256,7 @@ const Layout = ({ children, color }: LayoutProps) => {
                 flexDirection={['row', 'row', 'row']}
                 alignItems="flex-start"
               >
-                <Link to="/login" key="login">
-                  Log In
-                </Link>
+
               </Nav>
             </Box>
               <Box width={['3rem', '4rem', '5rem', '6rem']}>
@@ -270,12 +282,7 @@ const Layout = ({ children, color }: LayoutProps) => {
             </Flex>
           </SideBarInner>
           <Main>{children}</Main>
-          <Footer color={color}>
-            {/**<Box p={[6, 6, 8]} fontSize={0}>
-              Starter by <a href="https://www.lekoarts.de/en">LekoArts</a>.<br />
-              <a href="https://github.com/LekoArts/gatsby-starter-portfolio-jodie">Source</a>.
-            </Box>*/}
-          </Footer>
+
         </Wrapper>
       </>
     </ThemeProvider>
