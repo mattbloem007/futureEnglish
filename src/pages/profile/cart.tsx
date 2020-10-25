@@ -26,8 +26,8 @@ const CartExample = (props) => {
       <CartProvider
         mode="client-only"
         stripe={stripePromise}
-        successUrl={`https://www.futureleadershiptutoringservice.com/${lang}${originalPath}`}
-        cancelUrl={`https://www.futureleadershiptutoringservice.com/${lang}${originalPath}`}
+        successUrl={`https://www.futureleadershipenglish.com/${lang}${originalPath}`}
+        cancelUrl={`https://www.futureleadershipenglish.com/${lang}${originalPath}`}
         currency="USD"
         allowedCountries={['US', 'GB', 'CA']}
         billingAddressCollection={true}
