@@ -423,7 +423,7 @@ export const lock = isBrowser
 
               auth: {
                   audience: 'https://future-eng.us.auth0.com/api/v2/',
-                  redirectUrl: 'https://www.futureleadershipenglish.com/profile', //'http://localhost:8000/us/profile',//
+                  redirectUrl: 'https://www.futureleadershipenglish.com/us/profile', //'http://localhost:8000/us/profile',
                   responseType: 'token id_token',
                   autoParseHash: false,
                   params: {

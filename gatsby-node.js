@@ -46,9 +46,51 @@ const wrapper = promise =>
     // }
 
     config.siteMetadata.supportedLanguages.map(async lang => {
+      console.log ("LANG ", lang)
+      if (page.path == '/profile/' && lang == 'us') {
+        console.log("Created profile");
+        const localizedPath = `/${lang}${page.path}`;
+        createPage({
+              ...page,
+              path: localizedPath,
+              context: {
+                ...page.context,
+                originalPath,
+                lang,
+                login,
+              },
+            });
+      }
+      if (page.path == '/profile/cart/' && lang == 'us') {
+        console.log("Created cart")
+        const localizedPath = `/${lang}${page.path}`;
+        createPage({
+              ...page,
+              path: localizedPath,
+              context: {
+                ...page.context,
+                originalPath,
+                lang,
+                login,
+              },
+            });
+      }
+      if (page.path == '/profile/my-classes/' && lang == 'us') {
+        console.log("Created classes")
+        const localizedPath = `/${lang}${page.path}`;
+        createPage({
+              ...page,
+              path: localizedPath,
+              context: {
+                ...page.context,
+                originalPath,
+                lang,
+                login,
+              },
+            });
+      }
       if (lang != "us") {
         const localizedPath = `/${lang}${page.path}`;
-
          createPage({
                ...page,
                path: localizedPath,
