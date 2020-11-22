@@ -72,8 +72,8 @@ const Cart = () => {
 
   //  redirectToCheckout();
   console.log(stripePromise)
-  stripePromise.redirectToCheckout({mode: "subscription", successUrl: `https://www.futureleadershipenglish.com/${lang}${originalPath}`,
-  cancelUrl: `https://www.futureleadershipenglish.com/${lang}${originalPath}`, lineItems: lineItems})
+  stripePromise.redirectToCheckout({mode: "subscription", successUrl: `https://futureleadership.online/${lang}${originalPath}`,
+  cancelUrl: `https://futureleadership.online/${lang}${originalPath}`, lineItems: lineItems})
 
     // const body = JSON.stringify({
     //   checkout: user

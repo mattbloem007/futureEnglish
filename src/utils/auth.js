@@ -412,7 +412,7 @@ const auth = isBrowser
   ? new auth0.WebAuth({
       domain: "future-eng.us.auth0.com", //process.env.AUTH0_DOMAIN,
       clientID: "Qy7y5utJXi9uKlwT962PTeDXFTmXCJvu", //process.env.AUTH0_CLIENTID,
-      redirectUri: "https://www.futureleadershipenglish.com/callback", //process.env.AUTH0_CALLBACK,
+      redirectUri: "https://futureleadership.online/callback", //process.env.AUTH0_CALLBACK,
       responseType: "token id_token",
       scope: "openid profile email user_metadata",
     })
@@ -423,7 +423,7 @@ export const lock = isBrowser
 
               auth: {
                   audience: 'https://future-eng.us.auth0.com/api/v2/',
-                  redirectUrl: 'https://www.futureleadershipenglish.com/us/profile', //'http://localhost:8000/us/profile',
+                  redirectUrl: 'https://futureleadership.online/us/profile', //'http://localhost:8000/us/profile',
                   responseType: 'token id_token',
                   autoParseHash: false,
                   params: {
