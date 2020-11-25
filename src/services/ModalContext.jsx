@@ -1,5 +1,6 @@
 import { ModalRoutingContext } from "gatsby-plugin-modal-routing"
-import React from "react"
+import React, { useEffect } from "react"
+import { navigate } from 'gatsby';
 
 export function useModal() {
   const context = React.useContext(ModalRoutingContext)

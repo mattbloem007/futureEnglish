@@ -6,6 +6,10 @@ import { login, isAuthenticated, getProfile } from "../utils/auth"
 import Auth0Lock from 'auth0-lock';
 import Auth0LockPasswordless from 'auth0-lock-passwordless'
 import { usePageContext } from '../../PageContext';
+import { Redirect } from '@reach/router'
+import utilNav from '../services/utilNav'
+import { navigate } from 'gatsby';
+
 
 class Login extends React.Component {
 
@@ -22,17 +26,27 @@ class Login extends React.Component {
   componentWillMount() {
     if (!isAuthenticated()) {
       login()
-      return <p>Redirecting to login...</p>
+    }
+    else {
+      navigate('/us/profile');
     }
   }
 
     render () {
-      return (
-        <Layout>
-          <SEO title="About | FEA" desc="This is Future English Academy" />
+      // if (isAuthenticated()) {
+      //   console.log("IS AUTHENTICATED")
+      //
+      // }
+      // else {
+      //  console.log("IS NOT AUTHENTICATED")
+        return (
+          <Layout>
+            <SEO title="About | FEA" desc="This is Future English Academy" />
 
-        </Layout>
-      )
+          </Layout>
+        )
+    //  }
+
     }
 
 
