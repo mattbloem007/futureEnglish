@@ -86,7 +86,7 @@ export default function(props) {
             fileIndex = props.data.allFile.edges.find(({node}) => {
               if (node.parent) {
                 console.log(node.parent.id)
-                if (node.parent.id == `SitePage /${lang}/blog/` + e.node.slug) {
+                if (node.parent.id == `SitePage /blog/` + e.node.slug || node.parent.id == `SitePage /{$lang}/blog/` + e.node.slug) {
                   return node
                 }
               }
