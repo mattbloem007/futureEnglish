@@ -102,7 +102,7 @@ module.exports = {
          // This is field under which it's accessible
          fieldName: `wpgraphql`,
          // Url to query from
-         url: `http://41.185.8.137/~xic02/wordpress/graphql`,
+         url: `http://wordpress.futureleadership.online/wordpress/graphql`,
       //  url: `http://alchemy-of-remembrance.local/graphql`
        },
      },
@@ -128,7 +128,7 @@ module.exports = {
         icon: 'src/favicon.png',
       },
     },
-    'gatsby-plugin-offline',
+    'gatsby-plugin-remove-serviceworker',
     'gatsby-plugin-netlify',
   ],
 }
