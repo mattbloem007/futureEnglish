@@ -60,7 +60,7 @@
     "gatsby-source-graphql": "2.1.25",
     "gatsby-source-instagram": "^0.8.0",
     "gatsby-source-stripe": "^3.1.1",
-    "gatsby-transformer-remark": "^2.8.23",
+    "gatsby-transformer-remark": "^5.25.1",
     "gatsby-transformer-sharp": "^2.5.10",
     "gatsby-transformer-yaml": "^2.4.9",
     "i18next": "^19.6.2",
